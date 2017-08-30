@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "215948620052",
+    "firebase_url": "https://howtoreach-abdf7.firebaseio.com",
+    "project_id": "howtoreach-abdf7",
+    "storage_bucket": "howtoreach-abdf7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:215948620052:android:3caf5d98ae17dc59",
+        "android_client_info": {
+          "package_name": "com.example.sahan.howtoreach"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "215948620052-6e67ajb4tncapi08bpovtdolkicd2nn7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sahan.howtoreach",
+            "certificate_hash": "a2b0020ee318119ad7792aecccbc4f05447aebaf"
+          }
+        },
+        {
+          "client_id": "215948620052-q9q86uuhmd6cnleq94ad3m17h061cc2a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvcO9weiQ82innhI3rdDbQllk18QWXOfs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "215948620052-q9q86uuhmd6cnleq94ad3m17h061cc2a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
