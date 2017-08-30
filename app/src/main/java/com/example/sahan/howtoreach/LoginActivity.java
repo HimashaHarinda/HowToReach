@@ -119,6 +119,38 @@ public class LoginActivity extends AppCompatActivity {
         lForgotPassBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String userEmail = lEmail.getText().toString().trim();
+                if (!TextUtils.isEmpty(userEmail))
+                {
+                    if (validateEmail(userEmail)== true)
+                    {
+                        progress.setMessage("Verifying Email address, Please wait!");
+                        progress.show();
+
+                        auth.sendPasswordResetEmail(userEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful())
+                                {
+                                    progress.dismiss();
+                                    Toast.makeText(LoginActivity.this,"An email has been sent to you with password reset details. Please check your Emails.",Toast.LENGTH_SHORT).show();
+                                }
+                                else
+                                {
+                                    progress.dismiss();
+                                    Toast.makeText(LoginActivity.this,"Cannot find an account with provided email!",Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        Toast.makeText(LoginActivity.this,"Email Invalid, Please enter a valid Email!",Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else
+                {
+                    Toast.makeText(LoginActivity.this,"Please enter the email that you signed up with!",Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
