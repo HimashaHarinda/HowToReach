@@ -56,8 +56,8 @@ public class RegisterActivity extends AppCompatActivity {
         sRegisterBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userName = sFulname.getText().toString().trim();
-                String userEmail = sEmail.getText().toString().trim();
+                final String userName = sFulname.getText().toString().trim();
+                final String userEmail = sEmail.getText().toString().trim();
                 String userPass = sPassword.getText().toString().trim();
                 String userConfPass = sConfPassword.getText().toString().trim();
 
@@ -75,13 +75,26 @@ public class RegisterActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful())
                                     {
+                                        String uid = auth.getCurrentUser().getUid();
+                                        User newuser = new User();
+                                        newuser.setEmail(userEmail);
+                                        newuser.setName(userName);
+
+                                        howtoreach.child(uid).setValue(newuser);
+
                                         progress.dismiss();
+                                    }
+                                    else
+                                    {
+                                        progress.dismiss();
+                                        Toast.makeText(RegisterActivity.this,task.getException().getMessage()+" Try a different Email",Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
                         }
                         else
                         {
+                            progress.dismiss();
                             Toast.makeText(RegisterActivity.this,"Passwords you entered do not match, Please try again!",Toast.LENGTH_SHORT).show();
                         }
 

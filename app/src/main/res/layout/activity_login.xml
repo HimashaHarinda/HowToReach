@@ -39,16 +39,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="HowToReach"
-                    android:textSize="25dp"
+                    android:textSize="20dp"
                     android:textColor="@color/greyColor"/>
 
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text=" SignIn."
+                    android:text="SignIn."
                     android:textColor="@color/colorPrimary"
-                    android:textSize="27dp"
+                    android:textSize="22dp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -62,12 +62,11 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp"
                 android:textSize="15dp"
                 android:background="@drawable/input_outline"
                 android:ems="10"
                 android:hint="Email"
-                android:inputType="textPassword"
+                android:inputType="textEmailAddress"
                 android:padding="15dp" />
 
             <EditText
@@ -83,7 +82,7 @@
                 android:layout_marginRight="20dp"
                 android:background="@drawable/input_outline"
                 android:ems="10"
-                android:inputType="textEmailAddress"
+                android:inputType="textPassword"
                 android:padding="15dp" />
 
             <Button
@@ -116,7 +115,7 @@
 
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/linktosignupBTN"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
@@ -124,12 +123,39 @@
                 android:text="Not a member? Sign Up from here."
                 android:textAlignment="center"
                 android:textAllCaps="false"
-                android:textSize="10dp"
+                android:textSize="12dp"
                 android:textStyle="normal" />
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
 
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/cardView"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/forgotPassBTN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:fontFamily="sans-serif"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textSize="12dp"
+                android:text="Forgot password?" />
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
 
 </RelativeLayout>
