@@ -64,10 +64,11 @@
                 android:layout_marginRight="20dp"
                 android:textSize="15dp"
                 android:background="@drawable/input_outline"
+                android:padding="15dp"
                 android:ems="10"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
-                android:padding="15dp" />
+                />
 
             <EditText
                 android:id="@+id/signinPass"

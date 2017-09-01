@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center_vertical"
+    android:background="@color/backColor"
+    tools:context="com.example.sahan.howtoreach.AddTripActivity">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:foregroundGravity="center_vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/addTripDestination"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textSize="15dp"
+                android:background="@drawable/input_outline"
+                android:padding="15dp"
+                android:hint="Destination" />
+
+            <EditText
+                android:id="@+id/addTripStartDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textSize="15dp"
+                android:background="@drawable/input_outline"
+                android:padding="15dp"
+                android:inputType="date"
+                android:hint="Start Date"/>
+
+            <EditText
+                android:id="@+id/addTripEndDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textSize="15dp"
+                android:background="@drawable/input_outline"
+                android:padding="15dp"
+                android:ems="10"
+                android:inputType="date"
+                android:hint="End Date"/>
+
+            <EditText
+                android:id="@+id/addTripName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textSize="15dp"
+                android:background="@drawable/input_outline"
+                android:padding="15dp"
+                android:inputType="textPersonName"
+                android:hint="Trip Name"/>
+
+            <EditText
+                android:id="@+id/addTripDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textSize="15dp"
+                android:background="@drawable/input_outline"
+                android:padding="15dp"
+                android:inputType="textMultiLine"
+                android:hint="Description"/>
+
+            <Button
+                android:id="@+id/addTripBTN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/whiteColor"
+                android:text="Add Trip" />
+
+        </LinearLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>
