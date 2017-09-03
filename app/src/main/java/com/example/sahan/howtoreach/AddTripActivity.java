@@ -1,14 +1,29 @@
 package com.example.sahan.howtoreach;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.AutocompleteFilter;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlacePhotoMetadata;
+import com.google.android.gms.location.places.PlacePhotoMetadataBuffer;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,6 +33,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import static com.example.sahan.howtoreach.R.drawable.input_outline;
 
 public class AddTripActivity extends AppCompatActivity {
 
@@ -31,11 +48,16 @@ public class AddTripActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private DatabaseReference howtoreach;
 
+    private Double tripLong;
+    private Double tripLat;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_trip);
         getSupportActionBar().setTitle("Add Trip");
+
+        String placeId = null;
 
         auth = FirebaseAuth.getInstance();
         howtoreach = FirebaseDatabase.getInstance().getReference().child("trips");
@@ -47,6 +69,40 @@ public class AddTripActivity extends AppCompatActivity {
         tripDescription = (EditText)findViewById(R.id.addTripDescription);
         tripAddBTN = (Button) findViewById(R.id.addTripBTN);
 
+        PlaceAutocompleteFragment places= (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+
+        AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
+                .setTypeFilter(Place.TYPE_COUNTRY)
+                .setCountry("LK")
+                .build();
+
+        places.setFilter(typeFilter);
+
+        places.setHint("Destination");
+        ((View)findViewById(R.id.place_autocomplete_search_button)).setVisibility(View.GONE);
+        ((EditText)findViewById(R.id.place_autocomplete_search_input)).setBackgroundResource(R.drawable.input_outline);
+        ((EditText)findViewById(R.id.place_autocomplete_search_input)).setTextSize(16);
+        ((EditText)findViewById(R.id.place_autocomplete_search_input)).setPadding(34,34,34,34);
+
+        places.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+
+                tripLat = place.getLatLng().latitude;
+                tripLong = place.getLatLng().longitude;
+                tripDestination.setText(place.getName());
+
+
+            }
+
+            @Override
+            public void onError(Status status) {
+
+                Toast.makeText(getApplicationContext(),status.toString(),Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
 
         tripAddBTN.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +138,8 @@ public class AddTripActivity extends AppCompatActivity {
                             newTrip.setAddedDate(date);
                             newTrip.setPostedUserName(usernamePosted);
                             newTrip.setPlan(null);
+                            newTrip.setMarkerLong(tripLong);
+                            newTrip.setMarkerLat(tripLat);
 
                             howtoreach.child(tripid).setValue(newTrip);
                             Toast.makeText(AddTripActivity.this,"Trip added successfuly!",Toast.LENGTH_SHORT).show();

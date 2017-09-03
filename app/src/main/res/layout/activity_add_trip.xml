@@ -22,21 +22,41 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <fragment
+                android:id="@+id/place_autocomplete_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <EditText
                 android:id="@+id/addTripDestination"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:textSize="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
                 android:background="@drawable/input_outline"
+                android:ems="10"
+                android:hint="Destination"
+                android:inputType="textPersonName"
                 android:padding="15dp"
-                android:hint="Destination" />
+                android:textSize="15dp"
+                android:visibility="gone" />
 
             <EditText
                 android:id="@+id/addTripStartDate"
@@ -61,6 +81,7 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
+                android:onClick="showDatePickerDialog"
                 android:textSize="15dp"
                 android:background="@drawable/input_outline"
                 android:padding="15dp"

@@ -35,6 +35,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
 
+    private SharedPreferences pref;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         auth = FirebaseAuth.getInstance();
+
+        pref = this.getSharedPreferences("Users",0);
 
         progress = new ProgressDialog(this);
 
@@ -71,7 +75,11 @@ public class LoginActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful())
                                 {
-
+                                    SharedPreferences.Editor editor = pref.edit();
+                                    editor.putBoolean(Constants.IS_LOGGED_IN,true);
+                                    editor.putString(Constants.EMAIL,auth.getCurrentUser().getEmail());
+                                    editor.putString(Constants.UNIQUE_ID,auth.getCurrentUser().getUid());
+                                    editor.apply();
 
                                     progress.dismiss();
 

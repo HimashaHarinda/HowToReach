@@ -1,5 +1,7 @@
 package com.example.sahan.howtoreach;
 
+import com.google.android.gms.maps.model.LatLng;
+
 /**
  * Created by Himasha on 8/30/2017.
  */
@@ -13,12 +15,14 @@ public class Trip {
     private String postedUserId;
     private String postedUserName;
     private String addedDate;
-    Plan plan = new Plan();
+    private Double markerLat;
+    private Double markerLong;
+    Plan plan ;
 
     public Trip() {
     }
 
-    public Trip(String destination, String startDate, String endDate, String tripName, String description, String postedUserId, String postedUserName, String addedDate, Plan plan) {
+    public Trip(String destination, String startDate, String endDate, String tripName, String description, String postedUserId, String postedUserName, String addedDate, Double markerLat, Double markerLong, Plan plan) {
         this.destination = destination;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -27,6 +31,8 @@ public class Trip {
         this.postedUserId = postedUserId;
         this.postedUserName = postedUserName;
         this.addedDate = addedDate;
+        this.markerLat = markerLat;
+        this.markerLong = markerLong;
         this.plan = plan;
     }
 
@@ -92,6 +98,22 @@ public class Trip {
 
     public void setAddedDate(String addedDate) {
         this.addedDate = addedDate;
+    }
+
+    public Double getMarkerLat() {
+        return markerLat;
+    }
+
+    public void setMarkerLat(double markerLat) {
+        this.markerLat = markerLat;
+    }
+
+    public Double getMarkerLong() {
+        return markerLong;
+    }
+
+    public void setMarkerLong(double markerLong) {
+        this.markerLong = markerLong;
     }
 
     public Plan getPlan() {

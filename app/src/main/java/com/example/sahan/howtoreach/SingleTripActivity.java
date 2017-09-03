@@ -10,7 +10,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,7 +29,6 @@ public class SingleTripActivity extends AppCompatActivity {
     private TextView tName;
     private TextView tStartDate;
     private TextView tEndDate;
-    private TextView tDestination;
     private TextView tDescription;
     private TextView tPostedTime;
     private TextView tPostedUserName;
@@ -36,10 +37,12 @@ public class SingleTripActivity extends AppCompatActivity {
 
     private CardView planbtncardview;
     private CardView editRemoveTripcardview;
+    private LinearLayout destinationMap;
 
     private Button addnewplanBTN;
     private Button deleteTrip;
     private Button editTrip;
+    private TextView tDestination;
 
     private RecyclerView plan_list;
 
@@ -49,6 +52,9 @@ public class SingleTripActivity extends AppCompatActivity {
     private FirebaseAuth auth;
 
     private AlertDialog.Builder builder;
+
+    private Double tripLat;
+    private Double tripLong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +86,7 @@ public class SingleTripActivity extends AppCompatActivity {
 
         planbtncardview = (CardView)findViewById(R.id.addplanBTNcardview);
         editRemoveTripcardview = (CardView)findViewById(R.id.editRemoveTripCardView);
+        destinationMap = (LinearLayout) findViewById(R.id.tripDestinationCardView);
 
         plan_list = (RecyclerView) findViewById(R.id.plan_listT);
         plan_list.setHasFixedSize(true);
@@ -134,6 +141,8 @@ public class SingleTripActivity extends AppCompatActivity {
                 final String trip_description = (String) dataSnapshot1.child("description").getValue();
                 final String trip_postedTime = (String) dataSnapshot1.child("addedDate").getValue();
                 final String trip_postedusername = (String) dataSnapshot1.child("postedUserName").getValue();
+                tripLat = (Double) dataSnapshot1.child("markerLat").getValue();
+                tripLong = (Double) dataSnapshot1.child("markerLong").getValue();
                 tripAddedUser = (String) dataSnapshot1.child("postedUserId").getValue();
                         tName.setText(trip_name);
                         tStartDate.setText(trip_startDate);
@@ -157,6 +166,16 @@ public class SingleTripActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+
+        destinationMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SingleTripActivity.this, MapLoadActivity.class);
+                intent.putExtra("trip_lat", tripLat);
+                intent.putExtra("trip_long",tripLong);
+                startActivity(intent);
             }
         });
 
@@ -212,18 +231,8 @@ public class SingleTripActivity extends AppCompatActivity {
                 AlertDialog alert = builder.create();
                 alert.show();
 
-
-
-
-
-
             }
         });
-
-
-
-
-
 
     }
 

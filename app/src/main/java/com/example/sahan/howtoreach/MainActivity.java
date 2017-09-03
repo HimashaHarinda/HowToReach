@@ -1,6 +1,7 @@
 package com.example.sahan.howtoreach;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.navigation);
@@ -65,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
         {
             startActivity(new Intent(MainActivity.this,AddTripActivity.class));
         }
+        if (item.getItemId() == R.id.action_search)
+        {
+            startActivity(new Intent(MainActivity.this,SearchFulActivity.class));
+        }
         return super.onOptionsItemSelected(item);
+
     }
 }
