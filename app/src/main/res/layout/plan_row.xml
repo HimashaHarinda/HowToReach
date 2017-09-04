@@ -25,13 +25,13 @@
             tools:text="Plan Name" />
 
         <TextView
-            android:id="@+id/plan_hotelS"
+            android:id="@+id/plan_DescS"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="15dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            tools:text="plan_hotel" />]
+            tools:text="plan_Desc" />]
 
     </LinearLayout>
 </android.support.v7.widget.CardView>

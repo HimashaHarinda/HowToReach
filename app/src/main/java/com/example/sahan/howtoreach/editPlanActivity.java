@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +31,7 @@ public class editPlanActivity extends AppCompatActivity {
     private DatabaseReference howtoreachplans;
 
     private AlertDialog.Builder builder;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +48,9 @@ public class editPlanActivity extends AppCompatActivity {
         carNo = (TextView) findViewById(R.id.editplancarno);
 
         editPBTN = (Button)findViewById(R.id.editplanBTN);
+        auth = FirebaseAuth.getInstance();
 
-        howtoreachplans = FirebaseDatabase.getInstance().getReference().child("trips").child(trip_key).child("plans").child(plan_key);
+        howtoreachplans = FirebaseDatabase.getInstance().getReference().child("users").child(auth.getCurrentUser().getUid()).child("trips").child(trip_key).child("plans").child(plan_key);
 
         howtoreachplans.addValueEventListener(new ValueEventListener() {
             @Override

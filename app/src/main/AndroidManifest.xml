@@ -39,7 +39,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".SearchFulActivity" />
-        <activity android:name=".MapLoadActivity"></activity>
+        <activity android:name=".MapLoadActivity" />
+        <activity android:name=".SingleProfile" />
+        <activity android:name=".PlanDetailsActivity" />
+        <activity android:name=".CarRentalPlanActivity" />
+        <activity android:name=".RailwayPlanActivity" />
+        <activity android:name=".GroundTransportPlanActivity" />
+        <activity android:name=".RestaurantPlanActivity" />
+        <activity android:name=".ActivitiesPlanActivity"></activity>
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.example.sahan.howtoreach;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -8,9 +9,12 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -32,11 +36,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import static com.example.sahan.howtoreach.R.drawable.input_outline;
 
-public class AddTripActivity extends AppCompatActivity {
+public class AddTripActivity extends AppCompatActivity{
 
     private EditText tripDestination;
     private EditText tripStartDate;
@@ -51,23 +57,52 @@ public class AddTripActivity extends AppCompatActivity {
     private Double tripLong;
     private Double tripLat;
 
+    private DatePickerDialog fromDatePickerDialog;
+    private DatePickerDialog toDatePickerDialog;
+
+    private SimpleDateFormat dateFormatter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_trip);
         getSupportActionBar().setTitle("Add Trip");
 
+        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+        setDateTimeField();
+
         String placeId = null;
 
         auth = FirebaseAuth.getInstance();
-        howtoreach = FirebaseDatabase.getInstance().getReference().child("trips");
+        howtoreach = FirebaseDatabase.getInstance().getReference().child("users").child(auth.getCurrentUser().getUid()).child("trips");
 
         tripDestination = (EditText)findViewById(R.id.addTripDestination);
+
         tripStartDate = (EditText)findViewById(R.id.addTripStartDate);
+        tripStartDate.setInputType(InputType.TYPE_NULL);
+
         tripEndDate = (EditText)findViewById(R.id.addTripEndDate);
+        tripEndDate.setInputType(InputType.TYPE_NULL);
+
         tripName = (EditText)findViewById(R.id.addTripName);
         tripDescription = (EditText)findViewById(R.id.addTripDescription);
         tripAddBTN = (Button) findViewById(R.id.addTripBTN);
+
+        tripStartDate.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                fromDatePickerDialog.show();
+                return false;
+            }
+        });
+
+        tripEndDate.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                toDatePickerDialog.show();
+                return false;
+            }
+        });
 
         PlaceAutocompleteFragment places= (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
@@ -163,5 +198,45 @@ public class AddTripActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void setDateTimeField() {
+        Calendar newCalendar = Calendar.getInstance();
+        final Calendar newDate = Calendar.getInstance();
+
+        fromDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+
+                newDate.set(year, monthOfYear, dayOfMonth);
+                tripStartDate.setText(dateFormatter.format(newDate.getTime()));
+
+            }
+
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+
+
+        toDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                Calendar newDate2 = Calendar.getInstance();
+                newDate2.set(year, monthOfYear, dayOfMonth);
+
+                if (newDate2.after(newDate) || newDate2.equals(newDate))
+                {
+                    tripEndDate.setText(dateFormatter.format(newDate2.getTime()));
+                }
+                else
+                {
+                    Toast.makeText(AddTripActivity.this,"Trip End date must be after start date!",Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
     }
 }

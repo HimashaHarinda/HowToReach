@@ -13,12 +13,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class NewsfeedFragment extends Fragment {
     private RecyclerView tripList;
     private DatabaseReference howtoreach;
+    private FirebaseAuth auth;
 
     public static NewsfeedFragment newInstance() {
         NewsfeedFragment fragment = new NewsfeedFragment();
@@ -44,6 +46,8 @@ public class NewsfeedFragment extends Fragment {
                 viewHolder.setName(model.getTripName());
                 viewHolder.setDestination(model.getDestination());
                 viewHolder.setPostedDate(model.getAddedDate());
+                viewHolder.setTripFromDate(model.getStartDate());
+                viewHolder.setTripToDate(model.getEndDate());
 
                 viewHolder.mview.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -82,6 +86,18 @@ public class NewsfeedFragment extends Fragment {
             TextView tPostedDate = (TextView) mview.findViewById(R.id.job_posted_dateC);
             tPostedDate.setText("Added on "+tripPostedDate);
         }
+
+        public void setTripFromDate(String tripFromDate)
+        {
+            TextView tFromDate = (TextView) mview.findViewById(R.id.fromDateT);
+            tFromDate.setText(tripFromDate);
+        }
+
+        public void setTripToDate(String tripToDate)
+        {
+            TextView tToDate = (TextView) mview.findViewById(R.id.toDateT);
+            tToDate.setText(tripToDate);
+        }
     }
 
     @Override
@@ -103,7 +119,9 @@ public class NewsfeedFragment extends Fragment {
         tripList.setHasFixedSize(true);
         tripList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
-        howtoreach = FirebaseDatabase.getInstance().getReference().child("trips");
+        auth = FirebaseAuth.getInstance();
+
+        howtoreach = FirebaseDatabase.getInstance().getReference().child("users").child(auth.getCurrentUser().getUid()).child("trips");
         howtoreach.keepSynced(true);
 
     }

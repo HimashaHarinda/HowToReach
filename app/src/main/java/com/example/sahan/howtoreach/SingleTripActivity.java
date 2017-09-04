@@ -31,12 +31,13 @@ public class SingleTripActivity extends AppCompatActivity {
     private TextView tEndDate;
     private TextView tDescription;
     private TextView tPostedTime;
-    private TextView tPostedUserName;
+    private TextView tdesttt;
 
     private String tripAddedUser = null;
 
     private CardView planbtncardview;
     private CardView editRemoveTripcardview;
+    private CardView postedUserCard;
     private LinearLayout destinationMap;
 
     private Button addnewplanBTN;
@@ -63,12 +64,13 @@ public class SingleTripActivity extends AppCompatActivity {
         trip_key = getIntent().getExtras().getString("trip_id");
 
         final String tpkettriodelete = trip_key;
-
-        howtoreachTrips = FirebaseDatabase.getInstance().getReference().child("trips");
-        howtoreachUsers = FirebaseDatabase.getInstance().getReference().child("users");
-        howtoreachPlans = FirebaseDatabase.getInstance().getReference().child("trips").child(trip_key).child("plans");
-
         auth = FirebaseAuth.getInstance();
+
+        howtoreachTrips = FirebaseDatabase.getInstance().getReference().child("users").child(auth.getCurrentUser().getUid()).child("trips");
+        howtoreachUsers = FirebaseDatabase.getInstance().getReference().child("users");
+        howtoreachPlans = FirebaseDatabase.getInstance().getReference().child("users").child(auth.getCurrentUser().getUid()).child("trips").child(trip_key).child("plans");
+
+
 
         howtoreachUsers.keepSynced(true);
         howtoreachPlans.keepSynced(true);
@@ -82,7 +84,7 @@ public class SingleTripActivity extends AppCompatActivity {
         tDestination = (TextView) findViewById(R.id.singleTripDestination);
         tDescription = (TextView) findViewById(R.id.singleTripDescription);
         tPostedTime = (TextView) findViewById(R.id.singleTripPostedTime);
-        tPostedUserName = (TextView) findViewById(R.id.singleTripPostedUser);
+        tdesttt = (TextView) findViewById(R.id.tripdest);
 
         planbtncardview = (CardView)findViewById(R.id.addplanBTNcardview);
         editRemoveTripcardview = (CardView)findViewById(R.id.editRemoveTripCardView);
@@ -111,12 +113,12 @@ public class SingleTripActivity extends AppCompatActivity {
                 final String plan_key = getRef(position).getKey();
 
                 viewHolder.setPlanName(model.getPlanName());
-                viewHolder.setHotelName(model.getHotelName());
+                viewHolder.setPlanDesc(model.getPlanDesc());
 
                 viewHolder.mview.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(SingleTripActivity.this, SinglePlanActivity.class);
+                        Intent intent = new Intent(SingleTripActivity.this, PlanDetailsActivity.class);
                         intent.putExtra("plan_id", plan_key);
                         intent.putExtra("trip_id",trip_key);
                         startActivity(intent);
@@ -140,17 +142,16 @@ public class SingleTripActivity extends AppCompatActivity {
                 final String trip_dest = (String) dataSnapshot1.child("destination").getValue();
                 final String trip_description = (String) dataSnapshot1.child("description").getValue();
                 final String trip_postedTime = (String) dataSnapshot1.child("addedDate").getValue();
-                final String trip_postedusername = (String) dataSnapshot1.child("postedUserName").getValue();
                 tripLat = (Double) dataSnapshot1.child("markerLat").getValue();
                 tripLong = (Double) dataSnapshot1.child("markerLong").getValue();
                 tripAddedUser = (String) dataSnapshot1.child("postedUserId").getValue();
                         tName.setText(trip_name);
                         tStartDate.setText(trip_startDate);
                         tEndDate.setText(trip_endDate);
-                        tDestination.setText(trip_dest);
+                        tdesttt.setText("To "+trip_dest);
+                        tDestination.setText("Get Directions to "+trip_dest);
                         tDescription.setText(trip_description);
                         tPostedTime.setText(trip_postedTime);
-                        tPostedUserName.setText("By "+trip_postedusername);
 
                         if (auth.getCurrentUser().getUid().equals(tripAddedUser))
                         {
@@ -257,9 +258,9 @@ public class SingleTripActivity extends AppCompatActivity {
             pName.setText(planName);
         }
 
-        public void setHotelName(String hotel){
-            TextView pHotel = (TextView)mview.findViewById(R.id.plan_hotelS);
-            pHotel.setText(hotel);
+        public void setPlanDesc(String planDes){
+            TextView pHotel = (TextView)mview.findViewById(R.id.plan_DescS);
+            pHotel.setText(planDes);
         }
     }
 }

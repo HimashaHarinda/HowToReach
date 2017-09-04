@@ -47,8 +47,9 @@ public class SinglePlanActivity extends AppCompatActivity {
         plan_key = getIntent().getExtras().getString("plan_id");
         trip_key = getIntent().getExtras().getString("trip_id");
 
-        howtoreachplans = FirebaseDatabase.getInstance().getReference().child("trips").child(trip_key).child("plans").child(plan_key);
         auth = FirebaseAuth.getInstance();
+        howtoreachplans = FirebaseDatabase.getInstance().getReference().child("users").child(auth.getCurrentUser().getUid()).child("trips").child(trip_key).child("plans").child(plan_key);
+
 
         builder = new AlertDialog.Builder(this);
 
